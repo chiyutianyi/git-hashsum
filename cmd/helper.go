@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -17,6 +18,7 @@ func bindGitDir(flags *pflag.FlagSet, gitdir *string) {
 func initShaSum() ([32]byte, error) {
 	var rs [32]byte
 	c := exec.Command("git", "show-ref", "--head")
+	c.Env = os.Environ()
 
 	out, err := c.CombinedOutput()
 	if err != nil {
